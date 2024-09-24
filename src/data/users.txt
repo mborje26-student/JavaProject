@@ -1,2 +1,4 @@
 ID: 1|Username: 1|1Password: 1|DateOfBirth: main.java.actions.DateOfBirth@25bbe1b6
 ID: 1|Username: 1|1Password: 1|DateOfBirth: main.java.actions.DateOfBirth@25bbe1b6
+ID: 1|Username: 1|Password: 1|EmailAddress: |FavoriteColor: 1|DateOfBirth: main.java.actions.DateOfBirth@7e0b0338
+ID: 1|Username: 1|Password: 1|EmailAddress: 1|FavoriteNumber: 1|DateOfBirth: 11/11/1111
