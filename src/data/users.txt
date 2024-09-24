@@ -1,0 +1,2 @@
+ID: 1|Username: 1|1Password: 1|DateOfBirth: main.java.actions.DateOfBirth@25bbe1b6
+ID: 1|Username: 1|1Password: 1|DateOfBirth: main.java.actions.DateOfBirth@25bbe1b6
