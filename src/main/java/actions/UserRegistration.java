@@ -1,110 +1,19 @@
 package main.java.actions;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.File;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.time.LocalTime;
 import java.util.Scanner;
 
-// Class to handle date of birth input and validation
-class DateOfBirth {
-    private LocalDate dateOfBirth;
-
-    public DateOfBirth(String dob) throws DateTimeParseException {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        this.dateOfBirth = LocalDate.parse(dob, formatter);
-    }
-
-    public LocalDate getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public String getFormattedDate() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        return dateOfBirth.format(formatter);
-    }
-
-    public static DateOfBirth inputDateOfBirth(Scanner scanner) {
-        while (true) {
-            System.out.print("Enter your date of birth (dd/mm/yyyy): ");
-            String dobInput = scanner.nextLine();
-            if (dobInput.trim().isEmpty()) {
-                System.out.println("Date of birth cannot be empty! Please try again.");
-                continue;
-            }
-
-            try {
-                return new DateOfBirth(dobInput);
-            } catch (DateTimeParseException e) {
-                System.out.println("Invalid date format! Please try again.");
-            }
-        }
-    }
-}
-
-// User class to store user information
-class User {
-    private static int idCounter = 0; // Static counter for generating unique IDs
-    private int id; // User ID
-    private String username;
-    private String firstname;
-    private String lastname;
-    private int favoriteNumber;
-    private String password;
-    private String emailAddress;
-    private DateOfBirth dateOfBirth;
-
-    // Constructor
-    public User(String firstname, String lastname, int favoriteNumber, DateOfBirth dateOfBirth, String username, String password, String emailAddress) {
-        this.id = ++idCounter; // Increment and assign ID
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.favoriteNumber = favoriteNumber;
-        this.dateOfBirth = dateOfBirth;
-        this.username = username;
-        this.password = password;
-        this.emailAddress = emailAddress;
-    }
-
-    // Getters
-    public int getId() {
-        return id;
-    }
-
-    public String getFirstname() {
-        return firstname;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public int getFavoriteNumber() {
-        return favoriteNumber;
-    }
-
-    public DateOfBirth getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public String getEmailAddress() {
-        return emailAddress;
-    }
-}
-
 public class UserRegistration {
+
+
+    private static final String ID_FILE_PATH = "C:/Users/nique/JavaProject (2)/JavaProject/JavaProject/src/data/userIdCounter.txt";
+    private static final String USER_FILE_PATH = "C:/Users/nique/JavaProject (2)/JavaProject/JavaProject/src/data/users.txt";
+
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in); // scanner class is used to get the users input from the keyboard
 
         System.out.println("Create New User Account!");
 
@@ -129,21 +38,29 @@ public class UserRegistration {
         // Get the date of birth
         DateOfBirth dateOfBirth = DateOfBirth.inputDateOfBirth(scanner);
 
-        // Create a new user account
-        User newUser = new User(firstname, lastname, favoriteNumber, dateOfBirth, username, password, emailAddress);
+        // Load current ID counter from the file
+        int id = loadCurrentId();
 
-        // Save the user information in a file (in a specified location)
+        // Create a new user account with the current ID
+        User newUser = new User(id, firstname, lastname, favoriteNumber, dateOfBirth, username, password, emailAddress);
+
+        // Save the user information in a file
         saveUserToFile(newUser);
+
+        // Increment and save the next ID to the file
+        saveNextId(id + 1);
 
         System.out.println("\nRegistration Successful!");
         System.out.println("Account created with username: " + newUser.getUsername());
         System.out.println("Your account has been created!");
 
-        scanner.close();
+
+
+        scanner.close(); // closing the scanner for best practice to manage the memory usage and minimise risk of memory leaks
     }
 
     // Method to input a mandatory field
-    private static String inputMandatoryField(Scanner scanner, String prompt) {
+    public static String inputMandatoryField(Scanner scanner, String prompt) {
         String input;
         do {
             System.out.print(prompt);
@@ -168,9 +85,8 @@ public class UserRegistration {
 
             try {
                 favoriteNumber = Integer.parseInt(input);
-                // Check if the number is in the range 1-10
                 if (favoriteNumber >= 1 && favoriteNumber <= 10) {
-                    break; // Valid input, exit loop
+                    break;
                 } else {
                     System.out.println("Please enter a number between 1 and 10.");
                 }
@@ -187,7 +103,7 @@ public class UserRegistration {
         while (true) {
             System.out.print("Enter a password: ");
             password = scanner.nextLine();
-            if (password.trim().isEmpty()) {
+            if (password.trim().isEmpty()) {                               // use of trim() eliminates the whitespaces on both at the start and end of a string and isEmpty() checks if string is empty or not
                 System.out.println("Password cannot be empty! Please try again.");
                 continue;
             }
@@ -199,8 +115,7 @@ public class UserRegistration {
                 continue;
             }
 
-            // Check if the passwords match
-            if (password.equals(confirmPassword)) {
+            if (password.equals(confirmPassword)) {  //equals compares the String value of password and confirmPassword
                 return password;
             } else {
                 System.out.println("Passwords entered do not match. Please try again.");
@@ -209,14 +124,22 @@ public class UserRegistration {
     }
 
     // Method to get and confirm the email address
+
     private static String inputConfirmedEmail(Scanner scanner) {
         String emailAddress;
+
         while (true) {
             System.out.print("Enter an email address: ");
             emailAddress = scanner.nextLine();
             if (emailAddress.trim().isEmpty()) {
                 System.out.println("Email address cannot be empty! Please try again.");
                 continue;
+            }
+
+            // Check if the email already exists in users.txt
+            if (isEmailAlreadyRegistered(emailAddress)) {
+                System.out.println("This email address is already registered. Please use a different email.");
+                continue; // Ask for a different email
             }
 
             System.out.print("Confirm your email address: ");
@@ -226,31 +149,78 @@ public class UserRegistration {
                 continue;
             }
 
-            // Check if the email addresses match
             if (emailAddress.equals(confirmEmailAddress)) {
-                return emailAddress;
+                return emailAddress; // Valid email and confirmed
             } else {
                 System.out.println("Email addresses entered do not match. Please try again.");
             }
         }
     }
 
-    // Method to save user information to a file in a specific directory
+    // Helper method to check if email is already registered in the file
+    private static boolean isEmailAlreadyRegistered(String emailAddress) {
+        File userFile = new File("C:/Users/nique/JavaProject (2)/JavaProject/JavaProject/src/data/users.txt"); // Path to users.txt
+        if (!userFile.exists()) {
+            return false; // If file doesn't exist, no email can be registered
+        }
+
+        try (BufferedReader br = new BufferedReader(new FileReader(userFile))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                // Assuming the email is stored in the format: "EmailAddress: email@domain.com"
+                if (line.contains("EmailAddress: " + emailAddress)) {
+                    return true; // Email is found
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return false; // Email is not found
+    }
+
+
+    // Method to save user information to a file
     private static void saveUserToFile(User user) {
-        try {
-            // Create FileWriter with the specified path
-            FileWriter writer = new FileWriter("C:/Users/SZ16M7/JavaProject/JavaProject/src/data/users.txt", true);  // Write to data/users.txt
+        try (FileWriter writer = new FileWriter(USER_FILE_PATH, true)) {
+            LocalTime localTime = LocalTime.now();
             writer.write("ID: " + user.getId() + "|" +
                     "Username: " + user.getUsername() + "|" +
                     "Password: " + user.getPassword() + "|" +
                     "EmailAddress: " + user.getEmailAddress() + "|" +
                     "FavoriteNumber: " + user.getFavoriteNumber() + "|" +
-                    "DateOfBirth: " + user.getDateOfBirth().getFormattedDate() + "\n");
-
-            writer.close();
+                    "DateOfBirth: " + user.getDateOfBirth().getFormattedDate() + "|" +
+                    "CreatedOn: " + localTime + "\n");
             System.out.println("New user information has been saved to 'data/users.txt'.");
         } catch (IOException e) {
             System.out.println("An error occurred while saving the user information.");
+            e.printStackTrace();
+        }
+    }
+
+    // Method to load the current ID from the file
+    private static int loadCurrentId() {
+        try {
+            File idFile = new File(ID_FILE_PATH);
+            if (!idFile.exists()) {
+                saveNextId(1); // If the file does not exist, initialize the ID to 1
+                return 1;
+            }
+
+            String content = new String(Files.readAllBytes(Paths.get(ID_FILE_PATH)));
+            return Integer.parseInt(content.trim());
+        } catch (IOException | NumberFormatException e) {
+            e.printStackTrace();
+            return 1; // Default to 1 if there's an error
+        }
+    }
+
+    // Method to save the next ID to the file
+    private static void saveNextId(int nextId) {
+        try (FileWriter writer = new FileWriter(ID_FILE_PATH, false)) {
+            writer.write(Integer.toString(nextId));
+        } catch (IOException e) {
+            System.out.println("An error occurred while saving the next user ID.");
             e.printStackTrace();
         }
     }
