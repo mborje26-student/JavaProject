@@ -6,15 +6,11 @@ import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
 public class DateOfBirth {
-    private LocalDate dateOfBirth;
+    private final LocalDate dateOfBirth;
 
     public DateOfBirth(String dob) throws DateTimeParseException {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         this.dateOfBirth = LocalDate.parse(dob, formatter);
-    }
-
-    public LocalDate getDateOfBirth() {
-        return dateOfBirth;
     }
 
     public String getFormattedDate() {

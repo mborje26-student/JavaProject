@@ -9,8 +9,11 @@ public class SelectPet {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
+        // Create an instance of UserLogin
+        UserLogin userLogin = new UserLogin();
+
         // Check if the user successfully logs in before proceeding to pet selection
-        String username = UserLogin.login(scanner);
+        String username = userLogin.login(scanner); // Call login on the instance
         if (username != null) {
             if (hasExistingPet(username)) {
                 loadExistingPet(username);
@@ -27,6 +30,7 @@ public class SelectPet {
 
         scanner.close();
     }
+
 
     // Method to allow the user to select a pet
     public static void selectPet(Scanner scanner, String username) {

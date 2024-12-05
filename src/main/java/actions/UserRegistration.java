@@ -6,14 +6,21 @@ import java.nio.file.Paths;
 import java.time.LocalTime;
 import java.util.Scanner;
 
-public class UserRegistration {
-
+public class UserRegistration extends User {
 
     private static final String ID_FILE_PATH = "C:/Users/nique/JavaProject (2)/JavaProject/JavaProject/src/data/userIdCounter.txt";
     private static final String USER_FILE_PATH = "C:/Users/nique/JavaProject (2)/JavaProject/JavaProject/src/data/users.txt";
 
+
+
+    // Constructor to initialize fields using the User class constructor
+    public UserRegistration(int id, String firstname, String lastname, int favoriteNumber,
+                            DateOfBirth dateOfBirth, String username, String password, String emailAddress) {
+        super(id, firstname, lastname, favoriteNumber, dateOfBirth, username, password, emailAddress);
+    }
+
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in); // scanner class is used to get the users input from the keyboard
+        Scanner scanner = new Scanner(System.in);
 
         System.out.println("Create New User Account!");
 
@@ -41,8 +48,9 @@ public class UserRegistration {
         // Load current ID counter from the file
         int id = loadCurrentId();
 
-        // Create a new user account with the current ID
-        User newUser = new User(id, firstname, lastname, favoriteNumber, dateOfBirth, username, password, emailAddress);
+        // Create a new user account with the current ID using the inherited User constructor
+        UserRegistration newUser = new UserRegistration(id, firstname, lastname, favoriteNumber,
+                dateOfBirth, username, password, emailAddress);
 
         // Save the user information in a file
         saveUserToFile(newUser);
@@ -54,10 +62,11 @@ public class UserRegistration {
         System.out.println("Account created with username: " + newUser.getUsername());
         System.out.println("Your account has been created!");
 
-
-
-        scanner.close(); // closing the scanner for best practice to manage the memory usage and minimise risk of memory leaks
+        scanner.close();
     }
+
+    // Other methods remain unchanged
+
 
     // Method to input a mandatory field
     public static String inputMandatoryField(Scanner scanner, String prompt) {
