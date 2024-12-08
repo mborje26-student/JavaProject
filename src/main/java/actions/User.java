@@ -23,6 +23,8 @@ public class User {
         this.emailAddress = emailAddress;
     }
 
+
+
     // Getters
     public int getId() {
         return id;
