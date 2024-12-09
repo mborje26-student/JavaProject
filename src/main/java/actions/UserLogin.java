@@ -9,7 +9,6 @@ import java.util.Scanner;
 
 interface LoginService {
     String login(Scanner scanner); // Non-static
-    boolean isUserValid(String username, String password);
 }
 
 public class UserLogin implements LoginService {
@@ -35,8 +34,7 @@ public class UserLogin implements LoginService {
 
 
     // Method to check if the username and password are valid
-    @Override
-    public boolean isUserValid(String username, String password) {
+    private boolean isUserValid(String username, String password) {
         File userFile = new File("C:/Users/nique/JavaProject (2)/JavaProject/JavaProject/src/data/users.txt");
         if (!userFile.exists()) {
             return false;
