@@ -210,7 +210,7 @@ public class PetMonitor {
                     hungerLevel = Math.max(hungerLevel - 1, MIN_LEVEL);
                     attentionLevel = Math.max(attentionLevel - 1, MIN_LEVEL);
                     thirstLevel = Math.max(thirstLevel - 1, MIN_LEVEL);
-                    bladderLevel = Math.max(bladderLevel - 1, MIN_LEVEL); // Bladder level increases over time
+                    bladderLevel = Math.max(bladderLevel - 1, MIN_LEVEL);
                     happinessLevel = Math.max(happinessLevel - 1, MIN_LEVEL);
 
                     // Display the current levels
