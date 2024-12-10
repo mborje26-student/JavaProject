@@ -19,6 +19,10 @@ public class UserRegistration extends User {
         super(id, firstname, lastname, favoriteNumber, dateOfBirth, username, password, emailAddress);
     }
 
+    public int getId(){
+        return super.getId();
+    }
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
