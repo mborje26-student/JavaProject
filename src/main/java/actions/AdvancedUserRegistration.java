@@ -1,6 +1,4 @@
 package main.java.actions;
-import actions.UserActions;
-import actions.UserType;
 
 import java.util.function.Predicate;
 
@@ -27,7 +25,7 @@ public class AdvancedUserRegistration extends UserRegistration implements UserAc
 
         user.login("monique", "password123");
         user.logout();
-        actions.UserActions.resetPassword("monique@example.com");
+        UserActions.resetPassword("monique@example.com");
         UserType.displayUserTypes();
     }
 }

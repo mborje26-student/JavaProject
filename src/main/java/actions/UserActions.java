@@ -1,4 +1,4 @@
-package actions;
+package main.java.actions;
 
 public interface UserActions {
     void login(String username, String password);

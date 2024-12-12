@@ -1,4 +1,4 @@
-package actions;
+package main.java.actions;
 
 public enum UserType {
     ADMIN("Administrator with full access"),
