@@ -3,6 +3,13 @@ package main.java.actions;
 import java.util.Scanner;
 
 public class StartGame {
+    public StartGame() {
+        System.out.println("Default StartGame Constructor");
+    }
+
+    public StartGame(String customMessage) {
+        System.out.println("Custom Message: " + customMessage);
+    }
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -111,5 +118,47 @@ public class StartGame {
                 System.out.println("Your pet is in critical condition! Please attend to them immediately!");
             }
         }
+    }
+}
+class petMonitor {
+
+    public void feed() {
+        System.out.println("Pet has been fed with the default amount.");
+    }
+
+    public void feed(int amount) {
+        System.out.println("Pet has been fed with " + amount + " units of food.");
+    }
+
+    public void play() {
+        System.out.println("You played with your pet using default settings.");
+    }
+
+    public void play(int attentionIncrease, int happinessIncrease) {
+        System.out.println("You played with your pet. Attention: " + attentionIncrease + ", Happiness: " + happinessIncrease);
+    }
+
+    public void giveWater() {
+        System.out.println("Pet has been given water with the default amount.");
+    }
+
+    public void giveWater(int amount) {
+        System.out.println("Pet has been given " + amount + " units of water.");
+    }
+
+    public void potty() {
+        System.out.println("Pet has gone to potty.");
+    }
+
+    public void giveTreat() {
+        System.out.println("Pet has received a treat.");
+    }
+
+    public boolean isCriticalCondition() {
+        return false; // Placeholder implementation
+    }
+
+    public void stopMonitor() {
+        System.out.println("Pet monitor stopped.");
     }
 }

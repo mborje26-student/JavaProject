@@ -6,14 +6,22 @@ import java.util.Scanner;
 public class SelectPet {
     private static String petName;
 
+//    public SelectPet() {
+//        System.out.println("Default SelectPet Constructor");
+//    }
+//
+//    public SelectPet(String customMessage) {
+//        System.out.println("Custom Message: " + customMessage);
+//    }
+
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        var scanner = new Scanner(System.in);
 
         // Create an instance of UserLogin
-        UserLogin userLogin = new UserLogin();
+        var userLogin = new UserLogin();
 
         // Check if the user successfully logs in before proceeding to pet selection
-        String username = userLogin.login(scanner); // Call login on the instance
+        String username = userLogin.login(scanner);
         if (username != null) {
             if (hasExistingPet(username)) {
                 loadExistingPet(username);
@@ -22,8 +30,7 @@ public class SelectPet {
             }
 
             // Start the game after pet selection or loading an existing pet
-            StartGame.startGame(scanner, petName); // Now passing the petName
-
+            StartGame.startGame(scanner, petName);
         } else {
             System.out.println("Login failed. Please try again.");
         }
@@ -57,9 +64,10 @@ public class SelectPet {
             try {
                 selectedPet = Integer.parseInt(input);
                 if (selectedPet >= 1 && selectedPet <= petOptions.length) {
-                    System.out.println("You have selected: " + petOptions[selectedPet - 1].substring(3));
+                    String petType = petOptions[selectedPet - 1].substring(3);
+                    System.out.println("You have selected: " + petType);
                     petName = inputMandatoryField(scanner, "Enter pet name: ");
-                    saveUserPet(username, petOptions[selectedPet - 1].substring(3), petName);
+                    saveUserPet(username, petType, petName);
                 } else {
                     System.out.println("Invalid selection. Please select a valid option.");
                 }
@@ -68,6 +76,7 @@ public class SelectPet {
             }
         }
     }
+
 
     // Add a public getter to return the petName
     public static String getPetName() {
