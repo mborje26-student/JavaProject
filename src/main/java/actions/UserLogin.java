@@ -25,7 +25,7 @@ public class UserLogin implements LoginService {
         System.out.println("Enter you username and password to login");
     }
     public UserLogin(String message) {
-        System.out.println("Custom Message: " + message);
+        System.out.println(message);
     }
 
     // Method to log in a user
@@ -111,6 +111,7 @@ public class UserLogin implements LoginService {
             // Example of defensive copying with List
             List<User> users = new ArrayList<>();
             users.add(new User("admin", "password123", UserRole.ADMIN));
+            users.add(new User("user", "user123", UserRole.USER));
             users.add(new User("guest", "guest123", UserRole.GUEST));
 
             List<User> copiedUsers = List.copyOf(users);

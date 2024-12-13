@@ -1,5 +1,6 @@
 package main.java.actions;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class StartGame {
@@ -45,12 +46,13 @@ public class StartGame {
         while (gameRunning) {
             // Display the game options
             System.out.println("What would you like to do?");
-            for (String option : gameOptions) {
-                System.out.println(option);
-            }
+
+            // Use a method reference with a stream
+            Arrays.stream(gameOptions).forEach(System.out::println);
 
             // Get the user's choice
-            System.out.print("Enter your choice: ");
+            System.out.print("Enter your choice: \n");
+            System.out.print("************************\n");
             String choice = scanner.nextLine();
 
             switch (choice) {
@@ -60,9 +62,9 @@ public class StartGame {
                     String feedAmountInput = scanner.nextLine();
                     if (!feedAmountInput.isEmpty()) {
                         int feedAmount = Integer.parseInt(feedAmountInput);
-                        petMonitor.feed(feedAmount); // Use the overloaded feed method
+                        PetMonitor.feed(feedAmount); // Use the overloaded feed method
                     } else {
-                        petMonitor.feed(); // Use the default feed method
+                        PetMonitor.feed(); // Use the default feed method
                     }
                     break;
 
@@ -76,9 +78,9 @@ public class StartGame {
                     if (!attentionInput.isEmpty() && !happinessInput.isEmpty()) {
                         int attentionIncrease = Integer.parseInt(attentionInput);
                         int happinessIncrease = Integer.parseInt(happinessInput);
-                        petMonitor.play(); // Use the overloaded play method
+                        PetMonitor.play(); // Use the overloaded play method
                     } else {
-                        petMonitor.play(); // Use the default play method
+                        PetMonitor.play(); // Use the default play method
                     }
                     break;
 
@@ -88,23 +90,29 @@ public class StartGame {
                     String waterAmountInput = scanner.nextLine();
                     if (!waterAmountInput.isEmpty()) {
                         int waterAmount = Integer.parseInt(waterAmountInput);
-                        petMonitor.giveWater(waterAmount); // Use the overloaded giveWater method
+                        PetMonitor.giveWater(waterAmount); // Pass the amount using varargs
                     } else {
-                        petMonitor.giveWater(); // Use the default giveWater method
+                        PetMonitor.giveWater(); // No arguments passed, uses the default value in varargs method
                     }
                     break;
 
+
                 case "4":
-                    petMonitor.potty();
+                    PetMonitor.potty();
                     break;
 
                 case "5":
-                    petMonitor.giveTreat();
+                    PetMonitor.giveTreat();
                     break;
 
                 case "6":
                     System.out.println("Exiting the game. Goodbye!");
-                    petMonitor.stopMonitor();
+                    System.out.println("  / \\__\n" +
+                            " (    @\\___\n" +
+                            " /         O\n" +
+                            "/   (_____/\n" +
+                            "/_____/   U\n");
+                    PetMonitor.stopMonitor();
                     gameRunning = false;
                     break;
 
@@ -114,51 +122,51 @@ public class StartGame {
 
 
             // Check if pet is in critical condition
-            if (petMonitor.isCriticalCondition()) {
+            if (PetMonitor.isCriticalCondition()) {
                 System.out.println("Your pet is in critical condition! Please attend to them immediately!");
             }
         }
     }
 }
-class petMonitor {
-
-    public void feed() {
-        System.out.println("Pet has been fed with the default amount.");
-    }
-
-    public void feed(int amount) {
-        System.out.println("Pet has been fed with " + amount + " units of food.");
-    }
-
-    public void play() {
-        System.out.println("You played with your pet using default settings.");
-    }
-
-    public void play(int attentionIncrease, int happinessIncrease) {
-        System.out.println("You played with your pet. Attention: " + attentionIncrease + ", Happiness: " + happinessIncrease);
-    }
-
-    public void giveWater() {
-        System.out.println("Pet has been given water with the default amount.");
-    }
-
-    public void giveWater(int amount) {
-        System.out.println("Pet has been given " + amount + " units of water.");
-    }
-
-    public void potty() {
-        System.out.println("Pet has gone to potty.");
-    }
-
-    public void giveTreat() {
-        System.out.println("Pet has received a treat.");
-    }
-
-    public boolean isCriticalCondition() {
-        return false; // Placeholder implementation
-    }
-
-    public void stopMonitor() {
-        System.out.println("Pet monitor stopped.");
-    }
-}
+//class PetMonitor {
+//
+//    public void feed() {
+//        System.out.println("Pet has been fed with the default amount.");
+//    }
+//
+//    public void feed(int amount) {
+//        System.out.println("Pet has been fed with " + amount + " units of food.");
+//    }
+//
+//    public void play() {
+//        System.out.println("You played with your pet using default settings.");
+//    }
+//
+//    public void play(int attentionIncrease, int happinessIncrease) {
+//        System.out.println("You played with your pet. Attention: " + attentionIncrease + ", Happiness: " + happinessIncrease);
+//    }
+//
+//    public void giveWater() {
+//        System.out.println("Pet has been given water with the default amount.");
+//    }
+//
+//    public void giveWater(int amount) {
+//        System.out.println("Pet has been given " + amount + " units of water.");
+//    }
+//
+//    public void potty() {
+//        System.out.println("Pet has gone to potty.");
+//    }
+//
+//    public void giveTreat() {
+//        System.out.println("Pet has received a treat.");
+//    }
+//
+//    public boolean isCriticalCondition() {
+//        return false; // Placeholder implementation
+//    }
+//
+//    public void stopMonitor() {
+//        System.out.println("Pet monitor stopped.");
+//    }
+//}
