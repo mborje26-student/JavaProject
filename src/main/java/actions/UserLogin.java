@@ -114,7 +114,9 @@ public class UserLogin implements LoginService {
             users.add(new User("user", "user123", UserRole.USER));
             users.add(new User("guest", "guest123", UserRole.GUEST));
 
+            //unmodifiable copy of users list
             List<User> copiedUsers = List.copyOf(users);
+
 
             // Start the game after login
             StartGame.startGame(scanner, "Pumpkin");
