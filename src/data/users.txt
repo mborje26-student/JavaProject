@@ -5,3 +5,5 @@ ID: 1|Username: 2|Password: 2|EmailAddress: @gmail.com|FavoriteNumber: 2|DateOfB
 ID: 2|Username: m|Password: m|EmailAddress: n|FavoriteNumber: 1|DateOfBirth: 22/01/1996|CreatedOn: 09:56:28.125908400
 ID: 3|Username: mb|Password: mb|EmailAddress: @mm|FavoriteNumber: 2|DateOfBirth: 23/01/1996|CreatedOn: 11:11:02.824332800
 ID: 4|Username: 22|Password: 22|EmailAddress: 22@|FavoriteNumber: 2|DateOfBirth: 22/01/1996|CreatedOn: 13:55:00.381681600
+ID: 5|Username: monbor|Password: monbor|EmailAddress: monbor|FavoriteNumber: 2|DateOfBirth: 23/01/1996|CreatedOn: 00:36:16.907545200
+ID: 6|Username: borjem26|Password: password123|EmailAddress: borjem26@gmail.com|FavoriteNumber: 2|DateOfBirth: 23/01/1996|CreatedOn: 12:44:36.069372
